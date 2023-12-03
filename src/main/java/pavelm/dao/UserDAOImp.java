@@ -1,41 +1,44 @@
 package pavelm.dao;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import pavelm.entity.User;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 @Repository
 public class UserDAOImp implements UserDAO{
-    @Autowired
-    private SessionFactory sessionFactory;
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
-    public void deleteUser(int id) {
-        Session session = sessionFactory.openSession();
-        Query<User> query = session.createQuery("delete from User where id =:id");
-        query.setParameter("id", id);
-        query.executeUpdate();
+    public void deleteUser(int id) throws NullPointerException{
+        User user = this.getUser(id);
+        if (user == null){
+            throw new NullPointerException();
+        }
+        entityManager.remove(user);
+        entityManager.flush();
     }
 
     @Override
     public User getUser(int id) {
-        Session session = sessionFactory.openSession();
-        return session.get(User.class, id);
+        return entityManager.find(User.class, id);
     }
 
     @Override
-    public void saveUser(User user) {
-        Session session = sessionFactory.openSession();
-        session.saveOrUpdate(user);
+    public void createUser(User user) {
+        entityManager.persist(user);
+        entityManager.flush();
+    }
+    @Override
+    public void updateUser(User user) {
+        entityManager.merge(user);
+        entityManager.flush();
     }
 
     @Override
     public List<User> getAllUsers() {
-        Session session = sessionFactory.openSession();
-        return session.createQuery("from User", User.class).getResultList();
+        return entityManager.createQuery("from User", User.class).getResultList();
     }
 }

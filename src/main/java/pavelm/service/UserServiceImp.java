@@ -8,30 +8,37 @@ import pavelm.entity.User;
 
 import java.util.List;
 @Service
+@Transactional
 public class UserServiceImp implements UserService{
     @Autowired
     private UserDAO userDAO;
-
     @Override
-    @Transactional
     public void deleteUser(int id) {
-        userDAO.deleteUser(id);
+        try {
+            userDAO.deleteUser(id);
+        } catch (NullPointerException e){
+            e.printStackTrace();
+        }
     }
-
     @Override
-    @Transactional
     public User getUser(int id) {
         return userDAO.getUser(id);
     }
-
     @Override
-    @Transactional
-    public void saveUser(User user) {
-        userDAO.saveUser(user);
+    public void createOrUpdateUser(User user) {
+        if (user.getId() == 0){
+            this.createUser(user);
+        } else {
+            this.updateUser(user);
+        }
     }
-
+    public void updateUser(User user) {
+        userDAO.updateUser(user);
+    }
+    public void createUser(User user) {
+        userDAO.createUser(user);
+    }
     @Override
-    @Transactional
     public List<User> getAllUsers() {
         return userDAO.getAllUsers();
     }

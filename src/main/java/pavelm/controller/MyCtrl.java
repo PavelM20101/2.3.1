@@ -3,7 +3,9 @@ package pavelm.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pavelm.entity.User;
@@ -15,7 +17,7 @@ import java.util.List;
 public class MyCtrl {
     @Autowired
     private UserService userService;
-    @RequestMapping("/users")
+    @GetMapping("/users")
     public String getAllUsers(Model model){
         List<User> users = userService.getAllUsers();
         model.addAttribute("users", users);
@@ -27,9 +29,9 @@ public class MyCtrl {
         model.addAttribute("user", user);
         return "user-info";
     }
-    @RequestMapping("/saveUser")
+    @PostMapping("/saveUser")
     public String saveUser(@ModelAttribute("user") User user){
-        userService.saveUser(user);
+        userService.createOrUpdateUser(user);
         return "redirect:/users";
     }
     @RequestMapping("/updateUser")
@@ -38,7 +40,7 @@ public class MyCtrl {
         model.addAttribute("user", user);
         return "user-info";
     }
-    @RequestMapping("/deleteUser")
+    @PostMapping("/deleteUser")
     public String deleteUser(@RequestParam("userId") int id){
         userService.deleteUser(id);
         return "redirect:/users";

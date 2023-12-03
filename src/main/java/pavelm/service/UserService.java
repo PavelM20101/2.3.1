@@ -6,8 +6,8 @@ import pavelm.entity.User;
 import java.util.List;
 
 public interface UserService {
-    public void deleteUser(int id);
-    public User getUser(int id);
-    public void saveUser(User user);
-    public List<User> getAllUsers();
+    void deleteUser(int id);
+    User getUser(int id);
+    void createOrUpdateUser(User user);
+    List<User> getAllUsers();
 }
