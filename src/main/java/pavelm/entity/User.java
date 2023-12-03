@@ -1,14 +1,10 @@
 package pavelm.entity;
 
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -24,18 +20,13 @@ public class User {
     private String lastName;
     @Column(name = "email")
     private String email;
-    @JoinColumn(name = "car_id")
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    private Car car;
-
     public User() {
     }
 
-    public User(String name, String lastName, String email, Car car) {
+    public User(String name, String lastName, String email) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
-        this.car = car;
     }
 
     public int getId() {
@@ -69,36 +60,4 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    public Car getCar() {
-        return car;
-    }
-
-    public void setCar(Car car) {
-        this.car = car;
-    }
-
-//    @Override
-//    public String toString() {
-//        return "User{" +
-//                "id=" + id +
-//                ", name='" + name + '\'' +
-//                ", lastName='" + lastName + '\'' +
-//                ", email='" + email + '\'' +
-//                ", car=" + car +
-//                '}';
-//    }
-//
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        User user = (User) o;
-//        return id == user.id && Objects.equals(name, user.name) && Objects.equals(lastName, user.lastName) && Objects.equals(email, user.email) && Objects.equals(car, user.car);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(id, name, lastName, email, car);
-//    }
 }

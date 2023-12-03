@@ -5,7 +5,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import pavelm.entity.Car;
 import pavelm.entity.User;
 
 import java.util.List;
@@ -13,22 +12,6 @@ import java.util.List;
 public class UserDAOImp implements UserDAO{
     @Autowired
     private SessionFactory sessionFactory;
-
-    @Override
-    public void deleteUserCar(User user) {
-        Session session = sessionFactory.openSession();
-        int id = user.getId();
-        Query<User> query = session.createQuery("UPDATE User set User.car = null where id =:id");
-        query.setParameter("id", id);
-        query.executeUpdate();
-    }
-
-    @Override
-    public void setUserCar(User user, Car car) {
-        Session session = sessionFactory.openSession();
-        user.setCar(car);
-        session.persist(user);
-    }
 
     @Override
     public void deleteUser(int id) {
