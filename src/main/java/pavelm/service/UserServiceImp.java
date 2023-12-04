@@ -7,38 +7,50 @@ import pavelm.dao.UserDAO;
 import pavelm.entity.User;
 
 import java.util.List;
+
 @Service
-@Transactional
-public class UserServiceImp implements UserService{
+public class UserServiceImp implements UserService {
+
     @Autowired
     private UserDAO userDAO;
+
     @Override
+    @Transactional
     public void deleteUser(int id) {
         try {
             userDAO.deleteUser(id);
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             e.printStackTrace();
         }
     }
+
     @Override
+    @Transactional
     public User getUser(int id) {
         return userDAO.getUser(id);
     }
+
     @Override
     public void createOrUpdateUser(User user) {
-        if (user.getId() == 0){
+        if (user.getId() == 0) {
             this.createUser(user);
         } else {
             this.updateUser(user);
         }
     }
+
+    @Transactional
     public void updateUser(User user) {
         userDAO.updateUser(user);
     }
+
+    @Transactional
     public void createUser(User user) {
         userDAO.createUser(user);
     }
+
     @Override
+    @Transactional
     public List<User> getAllUsers() {
         return userDAO.getAllUsers();
     }

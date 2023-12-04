@@ -15,7 +15,7 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 @Configuration
 @ComponentScan("pavelm")
 @EnableWebMvc
-public class WebConfig implements WebMvcConfigurer{
+public class WebConfig implements WebMvcConfigurer {
     private final ApplicationContext applicationContext;
 
     @Autowired

@@ -6,15 +6,16 @@ import pavelm.entity.User;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+
 @Repository
-public class UserDAOImp implements UserDAO{
+public class UserDAOImp implements UserDAO {
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
-    public void deleteUser(int id) throws NullPointerException{
+    public void deleteUser(int id) throws NullPointerException {
         User user = this.getUser(id);
-        if (user == null){
+        if (user == null) {
             throw new NullPointerException();
         }
         entityManager.remove(user);
@@ -31,6 +32,7 @@ public class UserDAOImp implements UserDAO{
         entityManager.persist(user);
         entityManager.flush();
     }
+
     @Override
     public void updateUser(User user) {
         entityManager.merge(user);
