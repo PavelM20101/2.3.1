@@ -23,7 +23,7 @@ public class MyCtrl {
         model.addAttribute("users", users);
         return "all-users";
     }
-    @RequestMapping("/addNewUser")
+    @GetMapping("/addNewUser")
     public String addNewUser(Model model){
         User user = new User();
         model.addAttribute("user", user);
@@ -34,7 +34,7 @@ public class MyCtrl {
         userService.createOrUpdateUser(user);
         return "redirect:/users";
     }
-    @RequestMapping("/updateUser")
+    @GetMapping("/updateUser")
     public String updateUser(@RequestParam("userId") int id, Model model){
         User user = userService.getUser(id);
         model.addAttribute("user", user);
